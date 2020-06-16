@@ -43,12 +43,12 @@ RUN apk update && \
 
 # Add MCP self-signed CA public certificate to TrustStore
 
-ADD mcp-root-ca.crt /tmp
+ADD mcp-root-ca-2017.crt /tmp
+ADD mcp-root-ca-2020.crt /tmp
 
 RUN set -xe; \
-    keytool -keystore $JAVA_HOME/lib/security/cacerts \
-        -importcert -alias mcp-root-ca -file /tmp/mcp-root-ca.crt \
-        -storepass changeit -noprompt; \
+    keytool -keystore $JAVA_HOME/lib/security/cacerts -importcert -alias mcp-root-ca -file /tmp/mcp-root-ca-2017.crt -storepass changeit -noprompt; \
+    keytool -keystore $JAVA_HOME/lib/security/cacerts -importcert -alias mcp-root-ca-2020 -file /tmp/mcp-root-ca-2020.crt -storepass changeit -noprompt; \
     rm -rf /tmp/*
 
 #ENV LANG=C.UTF-8
